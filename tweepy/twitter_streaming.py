@@ -16,7 +16,12 @@ consumer_secret = "2q4BJdK0khZV8xIrjPyqtqYs0AtEQUecVE8DTZXMy30ZJiIoDv"
 class StdOutListener(StreamListener):
 		def on_data(self,data):
 				parsed_json = json.loads(data)
-				print(parsed_json['text'])
+				txt = parsed_json['text']
+				print(parsed_json['entities'])
+				#url = parsed_json['entities'][urls]
+				username = parsed_json['user']['screen_name']
+				tweet = "User:" + username + ":" + txt + "Url:"+ "\n"
+				print(tweet)
 				return True
 
 		def on_error(self,status):
@@ -28,8 +33,9 @@ if __name__ =='__main__':
 	auth = OAuthHandler(consumer_key, consumer_secret)
 	auth.set_access_token(access_token, access_token_secret)
 	stream = Stream(auth,l)
+
 	#This line filter Twitter Streams to capture data by the keywords: 'python', 'javascript', 'ruby'
-	stream.filter(track='Trump'&locations='-122.75,36.8','-121.75,37.8')
+	stream.filter(locations=[-122.75,36.8,-121.75,37.8])
 
 
 	#tweets_data_path = "~/172/tweepy/twitter_data.txt"
