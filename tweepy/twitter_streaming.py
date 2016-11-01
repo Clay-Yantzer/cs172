@@ -17,6 +17,7 @@ consumer_secret = "2q4BJdK0khZV8xIrjPyqtqYs0AtEQUecVE8DTZXMy30ZJiIoDv"
 
 
 i = 0 
+open('fetched_tweet0.txt','a').close()
 #This is a basic listener that just prints received tweets to stdout.
 class StdOutListener(StreamListener):
     def on_data(self,data):
@@ -27,11 +28,11 @@ class StdOutListener(StreamListener):
         #url = parsed_json['entities'][urls]
         username = parsed_json['user']['screen_name']
         tweet = "User:" + str(username) + ":" + str(txt) + "Url:"+ "\n"
-        statinfo = os.stat('/home/clay/data/fetched_tweet%s.txt' % i)
+        statinfo = os.stat('fetched_tweet%s.txt' % i)
         size_of_file = statinfo.st_size
         if(size_of_file > 10000000):
                     i += 1
-        with open('/home/clay/data/fetched_tweet%s.txt' % i,'a') as tf:
+        with open('fetched_tweet%s.txt' % i,'a') as tf:
             tf.write(unicode(data))
            # print(tweet)
         return True
